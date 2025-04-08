@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using NUnit.Framework.Constraints;
 using UnityEngine;
 
 public class GameBoard : MonoBehaviour
@@ -20,10 +21,15 @@ public class GameBoard : MonoBehaviour
 
     //Cashe References
     Dictionary<Vector2Int, Tile> gameBoard = new Dictionary<Vector2Int, Tile>();
+    Dictionary<Vector2Int, GameObject> characterObjPos = new Dictionary<Vector2Int, GameObject>();
+
     Tile selectedTile;
+    Vector2Int selectedCharacterPos = new Vector2Int();
+    GameObject selectedObj;
 
     //Attributes
     bool playerSelectedTile = false;
+    bool playerSelectedCharacter = false;
 
     private void Start()
     {
@@ -70,7 +76,7 @@ public class GameBoard : MonoBehaviour
         }
 
         //Check if player wants to select current tile
-        if (Input.GetKeyDown(KeyCode.Space) && !playerSelectedTile)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             SelectTileObject();
         }
@@ -159,14 +165,48 @@ public class GameBoard : MonoBehaviour
     //Method to select current tile object
     void SelectTileObject()
     {
-        //Player selected a tile
-        playerSelectedTile = true;
-        selectedTile = gameBoard[playerSelectPos];
+        HandleCharacterLogic();
 
-        //Set the tile object color to given player selected color
-        if (gameBoard[playerSelectPos].TryGetComponent<SpriteRenderer>(out SpriteRenderer renderer))
+        //If the player already selected a tile, Do not continue, & player is no longer selecting a tile
+        if (playerSelectedTile)
         {
-            renderer.color = playerSelectColor;
+            DeselectTileObject();
+            return;
+        }
+        //Otherwise, the player is selecting the current tile
+        else
+        {
+            //Player selected a tile
+            playerSelectedTile = true;
+            selectedTile = gameBoard[playerSelectPos];
+            if (selectedObj != null)
+            {
+                Debug.Log($"Selected object: {selectedObj.name}");
+            }
+            //Set the tile object color to given player selected color
+            if (gameBoard[playerSelectPos].TryGetComponent<SpriteRenderer>(out SpriteRenderer renderer))
+            {
+                renderer.color = playerSelectColor;
+            }
+        }
+    }
+
+    private void HandleCharacterLogic()
+    {
+        //If the player selected an object & the selected position doesn't have a character object, move the character to the position
+        if (selectedObj != null && !characterObjPos.ContainsKey(playerSelectPos) && playerSelectedCharacter == true)
+        {
+            MoveCharacterObject(selectedObj, selectedCharacterPos, playerSelectPos);
+        }
+        //Otherwise, player selected character object on this tile (if there is one)
+        else
+        {
+            if (characterObjPos.ContainsKey(playerSelectPos))
+            {
+                selectedObj = characterObjPos[playerSelectPos];
+                playerSelectedCharacter = true;
+                selectedCharacterPos = playerSelectPos;
+            }
         }
     }
 
@@ -175,6 +215,10 @@ public class GameBoard : MonoBehaviour
     {
         //Check if the object was selected. No need to run if they haven't
         if (!playerSelectedTile) { return; }
+
+        //Player is not selecting an object
+        selectedObj = null;
+        playerSelectedCharacter = false;
 
         //Reset the color of the tile to player color
         if (gameBoard[playerSelectPos] == selectedTile && 
@@ -190,5 +234,24 @@ public class GameBoard : MonoBehaviour
         //Player is no longer selecting a tile
         playerSelectedTile = false;
         selectedTile = null;
+    }
+
+    public void AddCharacterToBoard(GameObject characterObj, Vector2Int pos)
+    {
+        //Set chararcter obj to the given position
+        characterObj.transform.position = new Vector3(pos.x, pos.y, transform.position.z);
+
+        //update the character's position in the dictionary
+        characterObjPos.Add(pos, characterObj);
+    }
+
+    void MoveCharacterObject(GameObject characterObj, Vector2Int currentPos, Vector2Int newPos)
+    {
+        //Move the charactrer visually
+        characterObj.transform.position = new Vector3(newPos.x, newPos.y, transform.position.z);
+
+        //update the character's position in the dictionary
+        characterObjPos.Remove(currentPos);
+        characterObjPos.Add(newPos, characterObj);
     }
 }
