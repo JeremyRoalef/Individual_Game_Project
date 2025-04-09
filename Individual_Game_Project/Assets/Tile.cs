@@ -5,6 +5,7 @@ using UnityEngine;
 public class Tile : MonoBehaviour
 {
     SpriteRenderer renderer;
+    public bool isDisplayingCharacterMovePosition = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,6 +33,10 @@ public class Tile : MonoBehaviour
         {
             renderer.color = Color.black;
         }
+    }
+    public void SetTileColor(Color newColor)
+    {
+        renderer.color = newColor;
     }
 
     private void OnMouseDown()

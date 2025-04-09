@@ -13,6 +13,8 @@ public class GameBoard : MonoBehaviour
     [SerializeField]
     Color playerSelectColor = Color.green;
 
+    [SerializeField]
+    Color characterMoveColor = Color.green;
 
     [Header("Debugging")]
 
@@ -25,7 +27,7 @@ public class GameBoard : MonoBehaviour
 
     Tile selectedTile;
     Vector2Int selectedCharacterPos = new Vector2Int();
-    GameObject selectedObj;
+    GameObject selectedCharacter;
 
     //Attributes
     bool playerSelectedTile = false;
@@ -94,12 +96,19 @@ public class GameBoard : MonoBehaviour
         //Set the current tile the player is on back to its tile color only if it's not the selected tile
         if (gameBoard[playerSelectPos] != selectedTile)
         {
-            gameBoard[playerSelectPos].SetTileColor();
+            if (gameBoard[playerSelectPos].isDisplayingCharacterMovePosition)
+            {
+                gameBoard[playerSelectPos].SetTileColor(characterMoveColor);
+            }
+            else
+            {
+                gameBoard[playerSelectPos].SetTileColor();
+            }
         }
 
 
         //get square renderer at new position and update the color if the tile is not selected
-        if(gameBoard[newPos].TryGetComponent<SpriteRenderer>(out SpriteRenderer renderer) && 
+        if (gameBoard[newPos].TryGetComponent<SpriteRenderer>(out SpriteRenderer renderer) && 
             gameBoard[newPos] != selectedTile)
         {
             //Update the color
@@ -179,9 +188,9 @@ public class GameBoard : MonoBehaviour
             //Player selected a tile
             playerSelectedTile = true;
             selectedTile = gameBoard[playerSelectPos];
-            if (selectedObj != null)
+            if (selectedCharacter != null)
             {
-                Debug.Log($"Selected object: {selectedObj.name}");
+                Debug.Log($"Selected object: {selectedCharacter.name}");
             }
             //Set the tile object color to given player selected color
             if (gameBoard[playerSelectPos].TryGetComponent<SpriteRenderer>(out SpriteRenderer renderer))
@@ -194,18 +203,22 @@ public class GameBoard : MonoBehaviour
     private void HandleCharacterLogic()
     {
         //If the player selected an object & the selected position doesn't have a character object, move the character to the position
-        if (selectedObj != null && !characterObjPos.ContainsKey(playerSelectPos) && playerSelectedCharacter == true)
+        if (selectedCharacter != null && !characterObjPos.ContainsKey(playerSelectPos) && playerSelectedCharacter == true)
         {
-            MoveCharacterObject(selectedObj, selectedCharacterPos, playerSelectPos);
+            MoveCharacterObject(selectedCharacter, selectedCharacterPos, playerSelectPos);
+            HideCharacterMovePositions(selectedCharacter, selectedCharacterPos);
         }
         //Otherwise, player selected character object on this tile (if there is one)
         else
         {
             if (characterObjPos.ContainsKey(playerSelectPos))
             {
-                selectedObj = characterObjPos[playerSelectPos];
+                selectedCharacter = characterObjPos[playerSelectPos];
                 playerSelectedCharacter = true;
                 selectedCharacterPos = playerSelectPos;
+
+                //Display where the selected character can move to
+                DisplayCharacterMovePositions(selectedCharacter, playerSelectPos);
             }
         }
     }
@@ -217,7 +230,11 @@ public class GameBoard : MonoBehaviour
         if (!playerSelectedTile) { return; }
 
         //Player is not selecting an object
-        selectedObj = null;
+        if (selectedCharacter != null)
+        {
+            HideCharacterMovePositions(selectedCharacter, selectedCharacterPos);
+            selectedCharacter = null;
+        }
         playerSelectedCharacter = false;
 
         //Reset the color of the tile to player color
@@ -247,11 +264,88 @@ public class GameBoard : MonoBehaviour
 
     void MoveCharacterObject(GameObject characterObj, Vector2Int currentPos, Vector2Int newPos)
     {
+        //Get the displacement of the new and current position
+        Vector2 moveDisplacement = new Vector2(
+            newPos.x - currentPos.x,
+            newPos.y - currentPos.y
+            );
+
+        //Variable to test if character can move to position
+        bool canMoveCharacter = false;
+
+        //Check if the character can move to the given position. If they cant, don't move them
+        if (characterObj.TryGetComponent<Character>(out Character character))
+        {
+            //Loop through each position until all movement positions have been explored
+            foreach (Vector2 pos in character.GetMovingPositions())
+            {
+                if (moveDisplacement.x == pos.x && moveDisplacement.y == pos.y)
+                {
+                    canMoveCharacter = true;
+                    break;
+                }
+            }
+        }
+
+        //If player cannot move to position, return
+        if (!canMoveCharacter){ return; }
+
+
         //Move the charactrer visually
         characterObj.transform.position = new Vector3(newPos.x, newPos.y, transform.position.z);
 
         //update the character's position in the dictionary
         characterObjPos.Remove(currentPos);
         characterObjPos.Add(newPos, characterObj);
+    }
+
+    void DisplayCharacterMovePositions(GameObject givenCharacter, Vector2Int currentPos)
+    {
+        //Temporary V2Int
+        Vector2Int tempV2Int = new Vector2Int();
+
+        //Get the character component
+        if (givenCharacter.TryGetComponent<Character>(out Character character)){
+            //Loop through each position the character can move to
+            foreach (Vector2 pos in character.GetMovingPositions())
+            {
+                //Get the board position from where the character can move to
+                tempV2Int.x = (int)pos.x + currentPos.x;
+                tempV2Int.y = (int)pos.y + currentPos.y;
+
+                //Display the tiles with the movement color
+                if (gameBoard.ContainsKey(tempV2Int))
+                {
+                    gameBoard[tempV2Int].SetTileColor(characterMoveColor);
+                    gameBoard[tempV2Int].isDisplayingCharacterMovePosition = true;
+                }
+            }
+        }
+    }
+
+    void HideCharacterMovePositions(GameObject givenCharacter, Vector2Int currentPos)
+    {
+        //Temporary V2Int
+        Vector2Int tempV2Int = new Vector2Int();
+
+        //Get the character component
+        if (givenCharacter.TryGetComponent<Character>(out Character character))
+        {
+            //Loop through each position the character can move to
+            foreach (Vector2 pos in character.GetMovingPositions())
+            {
+                //Get the board position from where the character can move to
+                tempV2Int.x = (int)pos.x + currentPos.x;
+                tempV2Int.y = (int)pos.y + currentPos.y;
+
+                //Display the tiles with the movement color
+                if (gameBoard.ContainsKey(tempV2Int))
+                {
+                    //Set tile color to default
+                    gameBoard[tempV2Int].SetTileColor();
+                    gameBoard[tempV2Int].isDisplayingCharacterMovePosition = false;
+                }
+            }
+        }
     }
 }
