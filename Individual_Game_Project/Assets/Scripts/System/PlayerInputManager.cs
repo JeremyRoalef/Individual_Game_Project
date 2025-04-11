@@ -23,6 +23,24 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField]
     InputActionAsset inputActionAsset;
 
+
+    [Header("Debugging || Dev Tools")]
+
+    [SerializeField] [Tooltip("Change action map to use UI input")]
+    bool useUIActionMap = false;
+
+    [SerializeField] [Tooltip("Change action map to use board input")]
+    bool useBoardActionMap = false;
+    
+    [SerializeField] [Tooltip("Change action map to use world input")]
+    bool useWorldActionMap = false;
+
+    [SerializeField] [Tooltip("Enter the name of the scene you want to enter")]
+    string loadSceneName;
+
+    [SerializeField] [Tooltip("Enter the scene name above before switching the scene")]
+    bool switchScene = false;
+    
     //Delegates (Each delegate will control one of the PlayerInput events for easy game object hookup)
 
     //World delegates
@@ -59,18 +77,7 @@ public class PlayerInputManager : MonoBehaviour
     public static PlayerInputManager Instance { get; private set; }
 
     //Temporary attributes (will change later as things are automated)
-    [SerializeField]
-    bool useUIActionMap = false;
-    [SerializeField]
-    bool useBoardActionMap = false;
-    [SerializeField]
-    bool useWorldActionMap = false;
-    [SerializeField]
-    bool switchScene = false;
-    [SerializeField]
-    int loadSceneIndex = 0;
-    [SerializeField]
-    SceneAsset[] scenes;
+
 
     private void Awake()
     {
@@ -116,7 +123,7 @@ public class PlayerInputManager : MonoBehaviour
         if (switchScene)
         {
             switchScene = false;
-            SceneManager.LoadScene(scenes[loadSceneIndex].name);
+            SceneManager.LoadScene(loadSceneName);
         }
     }
 

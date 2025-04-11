@@ -195,7 +195,7 @@ public class GameBoard : MonoBehaviour
             selectedTile = gameBoard[playerSelectPos];
             if (selectedCharacter != null)
             {
-                Debug.Log($"Selected object: {selectedCharacter.name}");
+                //Debug.Log($"Selected object: {selectedCharacter.name}");
             }
             //Set the tile object color to given player selected color
             if (gameBoard[playerSelectPos].TryGetComponent<SpriteRenderer>(out SpriteRenderer renderer))
