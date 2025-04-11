@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 public class GameBoard : MonoBehaviour
 {
+
     //SerializedFields
     [Header("Player Color States")]
 
@@ -64,29 +65,27 @@ public class GameBoard : MonoBehaviour
         }
     }
 
-
-
     /*
      * 
      * PLAYER INPUT EVENTS
      * 
      */
 
-    //Player movement events
-    public void OnMoveUp(InputValue value) { MovePlayerUp(); }
-    public void OnMoveDown(InputValue value) { MovePlayerDown(); }
-    public void OnMoveLeft(InputValue value) { MovePlayerLeft(); }
-    public void OnMoveRight(InputValue value) { MovePlayerRight(); }
+    //Methods to subscribe to PlayerInputManager through StartingSceneInputManager
+    public void PlayerInput_OnBoardMoveUp() { MovePlayerUp(); }
+    public void PlayerInput_OnBoardMoveDown() { MovePlayerDown(); }
+    public void PlayerInput_OnBoardMoveLeft() { MovePlayerLeft(); }
+    public void PlayerInput_OnBoardMoveRight() { MovePlayerRight(); }
+    public void PlayerInput_OnBoardSelect() { SelectTileObject(); }
+    public void PlayerInput_OnBoardDeselect() { DeselectTileObject(); }
 
-    //Player selection
-    public void OnSelect(InputValue value)
-    {
-        SelectTileObject();
-    }
-    public void OnDeselect(InputValue value)
-    {
-        DeselectTileObject();
-    }
+
+
+    /*
+     * 
+     * MOVEMENT LOGIC
+     * 
+     */
 
     //Method to move player to the given position
     void MovePlayerToPos(Vector2Int newPos)

@@ -20,6 +20,13 @@ public class PlayerControls : MonoBehaviour
     Vector2 playerMoveDir;
 
 
+
+    /*
+     * 
+     * UNITY EVENTS
+     * 
+     */
+
     private void Start()
     {
         SetRigidbodyProperties();
@@ -31,6 +38,15 @@ public class PlayerControls : MonoBehaviour
         rb.linearVelocity = playerMoveDir * moveSpd * Time.deltaTime;
     }
 
+
+
+    /*
+     * 
+     * Other Methods
+     * 
+     */
+
+    //Method to initialize rigidbody
     private void SetRigidbodyProperties()
     {
         //Check if there's a rb2d component
@@ -46,21 +62,9 @@ public class PlayerControls : MonoBehaviour
         rb.gravityScale = 0f;
     }
 
-
-    /*
-     General setup for connecting PlayerInputManager events to code:
-
-    1) Add PlayerInputManager component to game object
-    2) Connect it to the right action map
-    3) in code: out void [EnterActionEvent](InputValue value){}
-       the action event name is under the PlayerInputManager component, where you see event names like 
-       OnDeviceLost, OnDeviceRegained, etc.
-     */
-
-    //This method is linked to the PlayerInputManager component attached to the Player game object, though
-    //my Intellisense is not bright enough to autofill the information for me :/
-    public void OnMove(InputValue value)
+    //Method to listen to event. Set up through StartingSceneInputManager
+    public void PlayerInput_OnWorldMove(Vector2 moveDir)
     {
-        playerMoveDir = value.Get<Vector2>();
+        playerMoveDir = moveDir;
     }
 }

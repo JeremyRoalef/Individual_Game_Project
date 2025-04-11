@@ -1,6 +1,9 @@
+using System;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 /*
  This script will be responsible for all of the player's input for world and UI navigation
@@ -8,25 +11,66 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputManager : MonoBehaviour
 {
+    //Enumerator for different input mode states
+    public enum InputMode
+    {
+        World,
+        Board,
+        UI
+    }
+
+    //SerializedFields
     [SerializeField]
     InputActionAsset inputActionAsset;
 
+    //Delegates (Each delegate will control one of the PlayerInput events for easy game object hookup)
+
+    //World delegates
+    public static event Action<Vector2> EOnWorldMove;
+
+
+    //Board delegates
+    public static event Action EOnBoardMoveUp;
+    public static event Action EOnBoardMoveDown;
+    public static event Action EOnBoardMoveLeft;
+    public static event Action EOnBoardMoveRight;
+    public static event Action EOnBoardSelect;
+    public static event Action EOnBoardDeselect;
+
+    //UI delegates
+    public static event Action EOnUIUp;
+    public static event Action EOnUIDown;
+    public static event Action EOnUILeft;
+    public static event Action EOnUIRight;
+    public static event Action EOnUISelect;
+    public static event Action EOnUIDeselect;
+
+    //Cashe References
     PlayerInput playerInput;
+
+    //Attributes
+    InputMode currentInputMode;
 
     const string UI_ACTION_MAP = "UI";
     const string BOARD_ACTION_MAP = "PlayerBoard";
     const string WORLD_ACTION_MAP = "PlayerWorld";
 
+    //Singleton instance
+    public static PlayerInputManager Instance { get; private set; }
 
     //Temporary attributes (will change later as things are automated)
-    Vector2 playerMoveDir;
-
     [SerializeField]
     bool useUIActionMap = false;
     [SerializeField]
     bool useBoardActionMap = false;
     [SerializeField]
     bool useWorldActionMap = false;
+    [SerializeField]
+    bool switchScene = false;
+    [SerializeField]
+    int loadSceneIndex = 0;
+    [SerializeField]
+    SceneAsset[] scenes;
 
     private void Awake()
     {
@@ -37,6 +81,17 @@ public class PlayerInputManager : MonoBehaviour
             playerInput = transform.AddComponent<PlayerInput>();
             playerInput.actions = inputActionAsset;
             playerInput.defaultActionMap = UI_ACTION_MAP;
+        }
+
+        //Singleton pattern
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -57,6 +112,12 @@ public class PlayerInputManager : MonoBehaviour
             useWorldActionMap= false;
             SetInputToWorld();
         }
+
+        if (switchScene)
+        {
+            switchScene = false;
+            SceneManager.LoadScene(scenes[loadSceneIndex].name);
+        }
     }
 
     /*
@@ -75,19 +136,32 @@ public class PlayerInputManager : MonoBehaviour
     public void SetInputToUI()
     {
         playerInput.SwitchCurrentActionMap(UI_ACTION_MAP);
+        currentInputMode = InputMode.UI;
     }
 
     //Method ot set input action map to board action map
     public void SetInputToBoard()
     {
         playerInput.SwitchCurrentActionMap(BOARD_ACTION_MAP);
+        currentInputMode = InputMode.Board;
     }
 
     //Method to set input action map to world action map
     public void SetInputToWorld()
     {
         playerInput.SwitchCurrentActionMap(WORLD_ACTION_MAP);
+        currentInputMode = InputMode.World;
     }
+
+    /*
+     * General setup for connecting PlayerInputManager events to code:
+     *
+     * 1) Add PlayerInputManager component to game object
+     * 2) Connect it to the right action map
+     * 3) in code: void [EnterActionEvent](InputValue value){}
+     *    the action event name is under the PlayerInputManager component, where you see event names like 
+     *    OnDeviceLost, OnDeviceRegained, etc.
+     */
 
     /*
      * 
@@ -97,9 +171,7 @@ public class PlayerInputManager : MonoBehaviour
 
     public void OnWorldMove(InputValue value)
     {
-        playerMoveDir = value.Get<Vector2>();
-
-        Debug.Log("World move");
+        EOnWorldMove?.Invoke(value.Get<Vector2>());
     }
 
 
@@ -112,33 +184,27 @@ public class PlayerInputManager : MonoBehaviour
 
     public void OnBoardMoveUp(InputValue value)
     {
-        Debug.Log("move up");
-        //MovePlayerUp(); 
+        EOnBoardMoveUp.Invoke();
     }
     public void OnBoardMoveDown(InputValue value) 
     {
-        Debug.Log("move down");
-        //MovePlayerDown(); 
+        EOnBoardMoveDown?.Invoke();
     }
     public void OnBoardMoveLeft(InputValue value) 
     {
-        Debug.Log("move left");
-        //MovePlayerLeft(); 
+        EOnBoardMoveLeft?.Invoke();
     }
     public void OnBoardMoveRight(InputValue value) 
     {
-        Debug.Log("move right");
-        //MovePlayerRight();
+        EOnBoardMoveRight?.Invoke();
     }
     public void OnBoardSelect(InputValue value)
     {
-        Debug.Log("select");
-        //SelectTileObject();
+        EOnBoardSelect?.Invoke();
     }
     public void OnBoardDeselect(InputValue value)
     {
-        Debug.Log("deselect");
-        //DeselectTileObject();
+        EOnBoardDeselect?.Invoke();
     }
 
     /*
@@ -149,30 +215,26 @@ public class PlayerInputManager : MonoBehaviour
 
     public void OnUIUp(InputValue value)
     {
-        Debug.Log("UI up");
-        //MovePlayerUp();
+        EOnUIUp?.Invoke();
     }
     public void OnUIDown(InputValue value)
     {
-        Debug.Log("UI down");
-        //MovePlayerDown();
+        EOnUIDown?.Invoke();
     }
     public void OnUILeft(InputValue value)
     {
-        Debug.Log("UI left");
-        //MovePlayerLeft();
+        EOnUILeft?.Invoke();
     }
     public void OnUIRight(InputValue value)
     {
-        Debug.Log("UI right");
-        //MovePlayerRight();
+        EOnUIRight?.Invoke();
     }
     public void OnUISelect(InputValue value)
     {
-        Debug.Log("UI select");
+        EOnUISelect?.Invoke();
     }
     public void OnUIDeselect(InputValue value)
     {
-        Debug.Log("UI deselect");
+        EOnUIDeselect?.Invoke();
     }
 }
