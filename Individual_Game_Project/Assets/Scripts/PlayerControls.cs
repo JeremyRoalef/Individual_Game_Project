@@ -48,16 +48,16 @@ public class PlayerControls : MonoBehaviour
 
 
     /*
-     General setup for connecting PlayerInput events to code:
+     General setup for connecting PlayerInputManager events to code:
 
-    1) Add PlayerInput component to game object
+    1) Add PlayerInputManager component to game object
     2) Connect it to the right action map
     3) in code: out void [EnterActionEvent](InputValue value){}
-       the action event name is under the PlayerInput component, where you see event names like 
+       the action event name is under the PlayerInputManager component, where you see event names like 
        OnDeviceLost, OnDeviceRegained, etc.
      */
 
-    //This method is linked to the PlayerInput component attached to the Player game object, though
+    //This method is linked to the PlayerInputManager component attached to the Player game object, though
     //my Intellisense is not bright enough to autofill the information for me :/
     public void OnMove(InputValue value)
     {

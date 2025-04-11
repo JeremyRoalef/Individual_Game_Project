@@ -6,7 +6,7 @@
             "id": "ae01923f-19cd-43a0-9449-d98bec9bfdbc",
             "actions": [
                 {
-                    "name": "Move",
+                    "name": "WorldMove",
                     "type": "Value",
                     "id": "10182f1b-1944-4ba9-984c-eb251550eb37",
                     "expectedControlType": "Vector2",
@@ -23,7 +23,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "WorldMove",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -34,7 +34,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "WorldMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -45,7 +45,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "WorldMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -56,7 +56,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "WorldMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -67,7 +67,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "WorldMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -78,7 +78,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "WorldMove",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -89,7 +89,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "WorldMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -100,7 +100,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "WorldMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -111,7 +111,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "WorldMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -122,7 +122,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "WorldMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }
@@ -133,7 +133,7 @@
             "id": "0f232147-3955-439d-b599-d6eab756fbf1",
             "actions": [
                 {
-                    "name": "MoveUp",
+                    "name": "BoardMoveUp",
                     "type": "Button",
                     "id": "87293800-4133-443b-90cd-67d93b937bfd",
                     "expectedControlType": "",
@@ -142,7 +142,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MoveDown",
+                    "name": "BoardMoveDown",
                     "type": "Button",
                     "id": "9f3f7653-c4b4-49ea-9aa6-332db9cfaf29",
                     "expectedControlType": "",
@@ -151,7 +151,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MoveLeft",
+                    "name": "BoardMoveLeft",
                     "type": "Button",
                     "id": "18dfd586-7357-4fec-9b64-e81e520da24b",
                     "expectedControlType": "",
@@ -160,7 +160,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MoveRight",
+                    "name": "BoardMoveRight",
                     "type": "Button",
                     "id": "126720d8-29c0-4fb6-842d-66edf2c2d763",
                     "expectedControlType": "",
@@ -169,7 +169,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Select",
+                    "name": "BoardSelect",
                     "type": "Button",
                     "id": "8fd68790-85ca-471f-aa2e-da2ed20f7c17",
                     "expectedControlType": "",
@@ -178,7 +178,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Deselect",
+                    "name": "BoardDeselect",
                     "type": "Button",
                     "id": "a3cd7094-629b-4ef8-ab3d-ddb611092176",
                     "expectedControlType": "",
@@ -195,7 +195,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveUp",
+                    "action": "BoardMoveUp",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -206,7 +206,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveUp",
+                    "action": "BoardMoveUp",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -217,7 +217,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveDown",
+                    "action": "BoardMoveDown",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -228,7 +228,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveDown",
+                    "action": "BoardMoveDown",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -239,7 +239,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveLeft",
+                    "action": "BoardMoveLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -250,7 +250,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveLeft",
+                    "action": "BoardMoveLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -261,7 +261,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveRight",
+                    "action": "BoardMoveRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -272,7 +272,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveRight",
+                    "action": "BoardMoveRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -283,7 +283,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Select",
+                    "action": "BoardSelect",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -294,7 +294,179 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Deselect",
+                    "action": "BoardDeselect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "40d8e241-abbf-4b22-beb0-58a136eb13a0",
+            "actions": [
+                {
+                    "name": "UIUp",
+                    "type": "Button",
+                    "id": "48cdab6c-89b7-4b4c-9a01-c66996122f60",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UIDown",
+                    "type": "Button",
+                    "id": "e35902ba-784d-482b-95d1-bc50005eea77",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UILeft",
+                    "type": "Button",
+                    "id": "7fa7b44f-7ffe-46f3-a91d-501561dcdb17",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UIRight",
+                    "type": "Button",
+                    "id": "30b2e130-054d-4cc1-a2cd-c47cae2428ad",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UISelect",
+                    "type": "Button",
+                    "id": "fdd372ce-c2be-4f47-b31f-81c1ae8ff013",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UIDeselect",
+                    "type": "Button",
+                    "id": "41c41902-3419-4a91-a363-85f64b731ab0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "e178f53c-d33f-4975-a7b8-4d32805bd191",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UIUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0a933c7d-a255-42e6-bcca-c5e9643771b7",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UIUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3f5b36ac-e175-4a5a-b4a4-5d37136a91c1",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UIDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e23522c3-b058-43a2-9efd-691d8bc2b624",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UIDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0d6355c6-1104-41b7-a311-beea1011bd66",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UILeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ae8a2114-5b3e-436b-a514-fab91bc50664",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UILeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "633ef351-6063-4af3-93e6-1af71057bb2c",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UIRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c9e8abb0-fd0a-472c-834b-f4bad3f20c06",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UIRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e800eb24-64a2-42fd-bd6a-e451fca5acc0",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UISelect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8e463bb1-b84a-4701-b18e-5443a6e2baa2",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UIDeselect",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
