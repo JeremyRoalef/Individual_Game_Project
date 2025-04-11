@@ -23,7 +23,6 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField]
     InputActionAsset inputActionAsset;
 
-
     [Header("Debugging || Dev Tools")]
 
     [SerializeField] [Tooltip("Change action map to use UI input")]
@@ -123,8 +122,13 @@ public class PlayerInputManager : MonoBehaviour
         if (switchScene)
         {
             switchScene = false;
-            SceneManager.LoadScene(loadSceneName);
+            SimpleDevTools.ChangeScene(loadSceneName);
         }
+    }
+
+    public static void GeneratePlayerInputGameObject()
+    {
+
     }
 
     /*
@@ -133,27 +137,20 @@ public class PlayerInputManager : MonoBehaviour
      * 
      */
 
-    //Method to set input action map to given input action map. Should not need this method, but just in case
     public void SetInputActionMap(string actionMap)
     {
         playerInput.SwitchCurrentActionMap(actionMap);
     }
-
-    //Method to set input action map to UI action map
     public void SetInputToUI()
     {
         playerInput.SwitchCurrentActionMap(UI_ACTION_MAP);
         currentInputMode = InputMode.UI;
     }
-
-    //Method ot set input action map to board action map
     public void SetInputToBoard()
     {
         playerInput.SwitchCurrentActionMap(BOARD_ACTION_MAP);
         currentInputMode = InputMode.Board;
     }
-
-    //Method to set input action map to world action map
     public void SetInputToWorld()
     {
         playerInput.SwitchCurrentActionMap(WORLD_ACTION_MAP);
@@ -191,7 +188,7 @@ public class PlayerInputManager : MonoBehaviour
 
     public void OnBoardMoveUp(InputValue value)
     {
-        EOnBoardMoveUp.Invoke();
+        EOnBoardMoveUp?.Invoke();
     }
     public void OnBoardMoveDown(InputValue value) 
     {

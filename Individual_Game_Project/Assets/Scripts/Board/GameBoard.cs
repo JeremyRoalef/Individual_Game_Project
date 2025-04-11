@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 
 public class GameBoard : MonoBehaviour
 {
-
     //SerializedFields
     [Header("Player Color States")]
 
@@ -176,7 +175,6 @@ public class GameBoard : MonoBehaviour
      * 
      */
 
-    //Method to select current tile object
     void SelectTileObject()
     {
         HandleCharacterLogic();
@@ -205,10 +203,8 @@ public class GameBoard : MonoBehaviour
         }
     }
 
-    //Method to deselect current tile object
     void DeselectTileObject()
     {
-        //Check if the object was selected. No need to run if they haven't
         if (!playerSelectedTile) { return; }
 
         //Player is not selecting an object
@@ -243,7 +239,6 @@ public class GameBoard : MonoBehaviour
      * 
      */
 
-    //Method for basic character logic
     private void HandleCharacterLogic()
     {
         //If the player selected an object & the selected position doesn't have a character object, move the character to the position
@@ -267,7 +262,6 @@ public class GameBoard : MonoBehaviour
         }
     }
 
-    //Method to add character to board at given position
     public void AddCharacterToBoard(GameObject characterObj, Vector2Int pos)
     {
         //Set chararcter obj to the given position
@@ -277,7 +271,6 @@ public class GameBoard : MonoBehaviour
         characterObjPos.Add(pos, characterObj);
     }
 
-    //Method to move character on the board
     void MoveCharacterObject(GameObject characterObj, Vector2Int currentPos, Vector2Int newPos)
     {
         //Get the displacement of the new and current position
@@ -315,7 +308,6 @@ public class GameBoard : MonoBehaviour
         characterObjPos.Add(newPos, characterObj);
     }
 
-    //Method to show where the selected character can move to
     void DisplayCharacterMovePositions(GameObject givenCharacter, Vector2Int currentPos)
     {
         //Temporary V2Int
@@ -340,7 +332,6 @@ public class GameBoard : MonoBehaviour
         }
     }
 
-    //Method to hide where the selected character can move to
     void HideCharacterMovePositions(GameObject givenCharacter, Vector2Int currentPos)
     {
         //Temporary V2Int
