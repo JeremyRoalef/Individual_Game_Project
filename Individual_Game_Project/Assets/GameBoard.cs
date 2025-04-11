@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using NUnit.Framework.Constraints;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameBoard : MonoBehaviour
 {
@@ -24,14 +24,21 @@ public class GameBoard : MonoBehaviour
     //Cashe References
     Dictionary<Vector2Int, Tile> gameBoard = new Dictionary<Vector2Int, Tile>();
     Dictionary<Vector2Int, GameObject> characterObjPos = new Dictionary<Vector2Int, GameObject>();
-
     Tile selectedTile;
-    Vector2Int selectedCharacterPos = new Vector2Int();
     GameObject selectedCharacter;
 
     //Attributes
+    Vector2Int selectedCharacterPos = new Vector2Int();
     bool playerSelectedTile = false;
     bool playerSelectedCharacter = false;
+
+
+
+    /*
+     * 
+     * UNITY EVENTS
+     * 
+     */
 
     private void Start()
     {
@@ -57,37 +64,28 @@ public class GameBoard : MonoBehaviour
         }
     }
 
-    private void Update()
+
+
+    /*
+     * 
+     * PLAYER INPUT EVENTS
+     * 
+     */
+
+    //Player movement events
+    public void OnMoveUp(InputValue value) { MovePlayerUp(); }
+    public void OnMoveDown(InputValue value) { MovePlayerDown(); }
+    public void OnMoveLeft(InputValue value) { MovePlayerLeft(); }
+    public void OnMoveRight(InputValue value) { MovePlayerRight(); }
+
+    //Player selection
+    public void OnSelect(InputValue value)
     {
-        //Check if player wants to move
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            MovePlayerUp();
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            MovePlayerDown();
-        }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            MovePlayerLeft();
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            MovePlayerRight();
-        }
-
-        //Check if player wants to select current tile
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SelectTileObject();
-        }
-
-        //Check if player wants to deselect current tile
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            DeselectTileObject();
-        }
+        SelectTileObject();
+    }
+    public void OnDeselect(InputValue value)
+    {
+        DeselectTileObject();
     }
 
     //Method to move player to the given position
@@ -171,6 +169,14 @@ public class GameBoard : MonoBehaviour
         }
     }
 
+
+
+    /*
+     * 
+     * TILE LOGIC
+     * 
+     */
+
     //Method to select current tile object
     void SelectTileObject()
     {
@@ -196,29 +202,6 @@ public class GameBoard : MonoBehaviour
             if (gameBoard[playerSelectPos].TryGetComponent<SpriteRenderer>(out SpriteRenderer renderer))
             {
                 renderer.color = playerSelectColor;
-            }
-        }
-    }
-
-    private void HandleCharacterLogic()
-    {
-        //If the player selected an object & the selected position doesn't have a character object, move the character to the position
-        if (selectedCharacter != null && !characterObjPos.ContainsKey(playerSelectPos) && playerSelectedCharacter == true)
-        {
-            MoveCharacterObject(selectedCharacter, selectedCharacterPos, playerSelectPos);
-            HideCharacterMovePositions(selectedCharacter, selectedCharacterPos);
-        }
-        //Otherwise, player selected character object on this tile (if there is one)
-        else
-        {
-            if (characterObjPos.ContainsKey(playerSelectPos))
-            {
-                selectedCharacter = characterObjPos[playerSelectPos];
-                playerSelectedCharacter = true;
-                selectedCharacterPos = playerSelectPos;
-
-                //Display where the selected character can move to
-                DisplayCharacterMovePositions(selectedCharacter, playerSelectPos);
             }
         }
     }
@@ -253,6 +236,39 @@ public class GameBoard : MonoBehaviour
         selectedTile = null;
     }
 
+
+
+    /*
+     * 
+     * CHARACTER LOGIC
+     * 
+     */
+
+    //Method for basic character logic
+    private void HandleCharacterLogic()
+    {
+        //If the player selected an object & the selected position doesn't have a character object, move the character to the position
+        if (selectedCharacter != null && !characterObjPos.ContainsKey(playerSelectPos) && playerSelectedCharacter == true)
+        {
+            MoveCharacterObject(selectedCharacter, selectedCharacterPos, playerSelectPos);
+            HideCharacterMovePositions(selectedCharacter, selectedCharacterPos);
+        }
+        //Otherwise, player selected character object on this tile (if there is one)
+        else
+        {
+            if (characterObjPos.ContainsKey(playerSelectPos))
+            {
+                selectedCharacter = characterObjPos[playerSelectPos];
+                playerSelectedCharacter = true;
+                selectedCharacterPos = playerSelectPos;
+
+                //Display where the selected character can move to
+                DisplayCharacterMovePositions(selectedCharacter, playerSelectPos);
+            }
+        }
+    }
+
+    //Method to add character to board at given position
     public void AddCharacterToBoard(GameObject characterObj, Vector2Int pos)
     {
         //Set chararcter obj to the given position
@@ -262,6 +278,7 @@ public class GameBoard : MonoBehaviour
         characterObjPos.Add(pos, characterObj);
     }
 
+    //Method to move character on the board
     void MoveCharacterObject(GameObject characterObj, Vector2Int currentPos, Vector2Int newPos)
     {
         //Get the displacement of the new and current position
@@ -299,6 +316,7 @@ public class GameBoard : MonoBehaviour
         characterObjPos.Add(newPos, characterObj);
     }
 
+    //Method to show where the selected character can move to
     void DisplayCharacterMovePositions(GameObject givenCharacter, Vector2Int currentPos)
     {
         //Temporary V2Int
@@ -323,6 +341,7 @@ public class GameBoard : MonoBehaviour
         }
     }
 
+    //Method to hide where the selected character can move to
     void HideCharacterMovePositions(GameObject givenCharacter, Vector2Int currentPos)
     {
         //Temporary V2Int
