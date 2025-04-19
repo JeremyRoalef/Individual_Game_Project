@@ -64,6 +64,8 @@ public class PlayerInputManager : MonoBehaviour
 
     //Cashe References
     PlayerInput playerInput;
+    InitializationCheck initializationCheck;
+
 
     //Attributes
     InputMode currentInputMode;
@@ -81,6 +83,7 @@ public class PlayerInputManager : MonoBehaviour
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
+        initializationCheck = GetComponent<InitializationCheck>();
 
         if (playerInput == null)
         {
@@ -99,6 +102,17 @@ public class PlayerInputManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+
+
+
+        //Player input is fully initizized
+        initializationCheck.SetObjectToInitialized();
+        //Reference is no longer needed
+        initializationCheck = null;
     }
 
     private void Update()

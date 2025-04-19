@@ -14,8 +14,12 @@ public class CanvasManager : MonoBehaviour
     GameObject activeCanvas = null;
 
 
+    InitializationCheck initializationCheck;
+
     private void Awake()
     {
+        initializationCheck = GetComponent<InitializationCheck>();
+
         //Singleton pattern
         if (Instance == null)
         {
@@ -31,6 +35,14 @@ public class CanvasManager : MonoBehaviour
         SceneManager.sceneUnloaded += ClearCanvasesInScene;
     }
 
+    private void Start()
+    {
+        
+        //Canvas Manager is initialized
+        initializationCheck.SetObjectToInitialized();
+        //Reference is no longer needed
+        initializationCheck = null;
+    }
 
     /*
      * 

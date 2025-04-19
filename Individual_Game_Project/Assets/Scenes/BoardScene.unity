@@ -356,14 +356,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ------INIT------
       objectReference: {fileID: 0}
-    - target: {fileID: 2997900939207586885, guid: 76d801a5a073f9343a6dcabb42ca550e, type: 3}
-      propertyPath: canvasesInScene.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2997900939207586885, guid: 76d801a5a073f9343a6dcabb42ca550e, type: 3}
-      propertyPath: enableFirstCanvasOnSceneLoad
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5381190699252866807, guid: 76d801a5a073f9343a6dcabb42ca550e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

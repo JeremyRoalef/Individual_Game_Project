@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6297475753216369676}
   - component: {fileID: 5566135089817287911}
   - component: {fileID: 6807335654972925169}
+  - component: {fileID: 2179940857912745046}
   m_Layer: 0
   m_Name: PlayerInputManager
   m_TagString: Untagged
@@ -49,13 +50,8 @@ MonoBehaviour:
   useUIActionMap: 0
   useBoardActionMap: 0
   useWorldActionMap: 0
+  loadSceneName: 
   switchScene: 0
-  loadSceneIndex: 0
-  scenes:
-  - {fileID: 102900000, guid: 84f7a5643e31dc54fbbe6f7a5397d78b, type: 3}
-  - {fileID: 102900000, guid: c4ec3d03acee4034c85bb795feca241e, type: 3}
-  - {fileID: 102900000, guid: ed59f53971720ab40ba8886a28806ea4, type: 3}
-  - {fileID: 102900000, guid: 8c9cfa26abfee488c85f1582747f6a02, type: 3}
 --- !u!114 &6807335654972925169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,3 +82,16 @@ MonoBehaviour:
   m_DefaultActionMap: UI
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &2179940857912745046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8711687060898693550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71004df19baa2ff4baf36eed33fe1d40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isInitialized: 0
