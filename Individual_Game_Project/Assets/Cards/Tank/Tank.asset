@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 768943f0eed31d4438c8b3ec937247e2, type: 3}
   m_Name: Tank
   m_EditorClassIdentifier: 
-  MovePositions: {x: 0, y: 0}
-  Abilities: []
-  BaseHp: 10
-  BaseShielding: 0
+  movePositions: []
+  abilities: []
+  baseHp: 10
+  baseShielding: 0

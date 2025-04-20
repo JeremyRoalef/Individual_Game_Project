@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: AtackAbilitySO
   m_EditorClassIdentifier: 
   abilityName: Ability
-  abilityDescription: This does something
   icon: {fileID: 0}
+  abilityDescription: This does something
   attackPositions: []
   attackType: 0
   damage: 5
