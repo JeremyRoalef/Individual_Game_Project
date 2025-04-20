@@ -13,6 +13,7 @@ public class MainMenuCanvas : MonoBehaviour
     public void OnButtonQuitClick()
     {
         Debug.Log("Quitting Application");
+        Application.Quit();
     }
     public void OnButtonSettingsClick()
     {

@@ -39,8 +39,15 @@ public class GameManager : MonoBehaviour
 
         //Subscription Events
         OnObjectInitialized += CheckIfGameIsReady;
+
         OnGameInitialized += RemoveInitializationMemory;
         OnGameInitialized += StartGame;
+    }
+
+    private void OnApplicationQuit()
+    {
+        //___Save game logic here___
+
     }
 
     private void RemoveInitializationMemory()
