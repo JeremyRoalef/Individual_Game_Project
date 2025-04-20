@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class GameBoard : MonoBehaviour
 {
+    public UnityEvent OnCharacterSelect;
+
     //SerializedFields
     [Header("Player Color States")]
 

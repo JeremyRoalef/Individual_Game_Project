@@ -1,9 +1,7 @@
 using System;
 using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
 /*
  This script will be responsible for all of the player's input for world and UI navigation
@@ -44,7 +42,7 @@ public class PlayerInputManager : MonoBehaviour
 
     //World delegates
     public static event Action<Vector2> EOnWorldMove;
-
+    public static event Action EOnInteract;
 
     //Board delegates
     public static event Action EOnBoardMoveUp;
@@ -191,8 +189,10 @@ public class PlayerInputManager : MonoBehaviour
     {
         EOnWorldMove?.Invoke(value.Get<Vector2>());
     }
-
-
+    public void OnInteract(InputValue value)
+    {
+        EOnInteract?.Invoke();
+    }
 
     /*
      * 
